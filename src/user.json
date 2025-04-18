@@ -1,0 +1,9 @@
+{
+    "entries" : [
+        {
+            "username" : "alice",
+            "password" : "12345",
+            "subscriptionstatus" : "subscribed" 
+        }
+    ]
+}
