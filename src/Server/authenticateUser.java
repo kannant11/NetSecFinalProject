@@ -43,19 +43,19 @@ public class authenticateUser {
             }
             return true;
         }catch(Exception e){
-            return false
+            return false;
                 }
     }
     
     private boolean verifyPassword(String password, JSONObject user) throws Exception{
         byte[] salt = Base64.getDecoder().decode(user.getString("salt"));
         byte[] storedHash = Base64.getDecoder().decode(user.getString("password"));
-        byte[] computedHash = SCrypted.generate(password.getBytes(StandardCharsets.UTF_8), salt, 20000, 10, 1, storedHash.length);
+        byte[] computedHash = SCrypt.generate(password.getBytes(StandardCharsets.UTF_8), salt, 20000, 10, 1, storedHash.length);
 
         return MessageDigest.isEqual(storedHash, computedHash);
     }
 
-    private boolean verifyHmac(String username, String HmacKey, String received Hmac) throws Exception{
+    private boolean verifyHmac(String username, String hmacKey, String receivedHmac) throws Exception{
         if(receivedHmac == null || receivedHmac.isEmpty()){
             return false;
         }
@@ -69,7 +69,7 @@ public class authenticateUser {
 
         byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
         byte[] dataBytes = data.getBytes(StandardCharsets.UTF_8);
-        byte[] result - new byte[hmac.getMacSize()];
+        byte[] result = new byte[hmac.getMacSize()];
 
         hmac.init(new KeyParameter(keyBytes));
         hmac.update(dataBytes, 0, dataBytes.length);
