@@ -15,9 +15,9 @@ import org.bouncycastle.crypto.params.KeyParameter;
 
 
 public class authenticateUser {
-    private UserManager userManager;
+    private userManager userManager;
 
-    public authenticateUser(UserManager userManager){
+    public authenticateUser(userManager userManager){
          this.userManager = userManager;
     }
 
@@ -64,8 +64,8 @@ public class authenticateUser {
         return MessageDigest.isEqual(computedHmac.getBytes(StandardCharsets.UTF_8), receivedHmac.getBytes(StandardCharsets.UTF_8));
     }
 
-    private String calculateHmac(String data String key) throws Exception{
-        Hmac hmac = new Hmac(new SHA256Digest());
+    private String calculateHmac(String data, String key) throws Exception{
+        HMac hmac = new HMac(new SHA256Digest());
 
         byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
         byte[] dataBytes = data.getBytes(StandardCharsets.UTF_8);
