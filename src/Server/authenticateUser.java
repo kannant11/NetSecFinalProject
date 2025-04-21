@@ -10,7 +10,7 @@ import java.security.MessageDigest;
 
 import org.bouncycastle.crypto.generators.SCrypt;
 import org.bouncycastle.crypto.macs.HMac;
-import org.bouncycastle.crypto.digest.SHA256Digest;
+import org.bouncycastle.crypto.digest.SHA224Digest;
 import org.bouncycastle.crypto.params.KeyParameter;
 
 
@@ -32,7 +32,7 @@ public class authenticateUser {
                 return false;
             }
 
-            if(user.has("hmacKey")){
+            if(user.containsKey("hmacKey")){
                 String hmacKey = user.getString("hmacKey");
                 String expectedHmac = calculateHmac(username + nonce, hmacKey);
 
