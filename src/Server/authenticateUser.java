@@ -10,7 +10,7 @@ import java.security.MessageDigest;
 
 import org.bouncycastle.crypto.generators.SCrypt;
 import org.bouncycastle.crypto.macs.HMac;
-import org.bouncycastle.crypto.digest.SHA224Digest;
+import org.bouncycastle.crypto.digests.SHA224Digest;
 import org.bouncycastle.crypto.params.KeyParameter;
 
 
