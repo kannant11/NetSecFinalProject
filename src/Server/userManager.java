@@ -4,7 +4,7 @@ import merrimackutil.json.JsonIO;
 import merrimackutil.json.types.JSONObject;
 import merrimackutil.json.types.JSONArray;
 
-import java.nio.charset.StandardCharSets;
+import java.nio.charset.StandardCharsets;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +45,7 @@ public class userManager {
         return user != null && "subscribed".equals(user.getString("Subscription status"));
     }
 
-    public void addUser(String username, String password, boolean isSubsribed)throws Exception{
+    public void addUser(String username, String password, boolean isSubscribed)throws Exception{
         if(users.containsKey(username)){
             throw new IllegalArgumentException("user already exist. ");
         }
@@ -95,7 +95,9 @@ public class userManager {
         }
 
         usersData.put("users", usersArray);
-        JsonIO.write(usersData, new File(filePath));
+        PrintWriter out = new PrintWriter(new File(filePath));
+        out.println(usersData.getFormattedJSON());
+        out.close;
     }
     
 }
