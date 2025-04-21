@@ -6,6 +6,7 @@ import merrimackutil.json.types.JSONArray;
 
 import java.nio.charset.StandardCharsets;
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Base64;
@@ -97,7 +98,7 @@ public class userManager {
         usersData.put("users", usersArray);
         PrintWriter out = new PrintWriter(new File(filePath));
         out.println(usersData.getFormattedJSON());
-        out.close;
+        out.close();
     }
     
 }
