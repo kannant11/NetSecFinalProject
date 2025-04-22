@@ -56,7 +56,7 @@ public class userManager {
         saveUsersToFile();
     }
 
-    private JSONObject createUserObject(String username, String password, boolean isSubscribed)throws Exception{
+    public JSONObject createUserObject(String username, String password, boolean isSubscribed)throws Exception{
         JSONObject user = new JSONObject();
         user.put("username", username);
 
@@ -71,23 +71,23 @@ public class userManager {
         return user;
     }
 
-    private byte[] generateSalt(){
+    public byte[] generateSalt(){
         byte[] salt = new byte[16];
         new SecureRandom().nextBytes(salt);
         return salt;
     }
 
-    private String generateTOTPSecret(){
+    public String generateTOTPSecret(){
         return "tempPassword";
     }
 
-    private String generateHmacKey(){
+    public String generateHmacKey(){
         byte[] key = new byte[32];
         new SecureRandom().nextBytes(key);
         return Base64.getEncoder().encodeToString(key);
     }
 
-    private void saveUsersToFile()throws Exception{
+    public void saveUsersToFile()throws Exception{
         JSONObject usersData = new JSONObject();
         JSONArray usersArray = new JSONArray();
 
