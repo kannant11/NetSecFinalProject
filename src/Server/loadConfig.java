@@ -12,7 +12,7 @@ public class loadConfig {
     }
 
     public String getFilePath(){
-        return config.getString("users File");
+        return config.getString("user File");
     }
 
     public String gamesFilePath(){
