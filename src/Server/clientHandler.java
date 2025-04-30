@@ -87,8 +87,8 @@ public class clientHandler implements Runnable{
         
         catch (Exception e) {
             System.out.println("Client disconnected.");
+        }
     }
-}
 
     private boolean verifyPassword(JSONObject user, String inputPassword) throws IOException{
         try {
@@ -115,8 +115,6 @@ public class clientHandler implements Runnable{
         return " ";
     }
 
-
-
-    }
+}
     
 
