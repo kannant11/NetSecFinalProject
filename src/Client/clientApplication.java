@@ -3,8 +3,6 @@ package Client;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.UnknownHostException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -12,7 +10,6 @@ import java.util.Scanner;
 
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
-import javax.sound.midi.SysexMessage;
 
 import merrimackutil.json.types.JSONObject;
 
@@ -33,8 +30,12 @@ public class clientApplication {
     public static Scanner receiver; //receiver for user to receive information from server
     public static PrintWriter writer; //writer for user to send information to server
 
+    static clientHandler ch; //instance of clientHandler
+    static userManager um; //instance of class userManager
+    static videoGameManager vgm; //instance of class videoGameManager
+
     //main class
-    public static void main(String[] args) throws InputMismatchException, NoSuchElementException, IllegalStateException{
+    public static void main(String[] args) throws InputMismatchException, NoSuchElementException, IllegalStateException, IOException{
         System.setProperty("javax.net.ssl.trustStore", "truststore.jks"); //set up truststore
         System.setProperty("javax.net.ssl.trustStorePassword", "trust12345"); //set up truststore's password
 
@@ -42,7 +43,6 @@ public class clientApplication {
         try {
             factory = (SSLSocketFactory) SSLSocketFactory.getDefault(); //socket factory created
             socket = (SSLSocket) factory.createSocket(); //create socket from its factory
-
             socket.startHandshake(); //start the handshake process using the socket
 
             receiver = new Scanner(socket.getInputStream()); //receiver set up
@@ -67,16 +67,22 @@ public class clientApplication {
         //scanner so user can type password
         password = sc.nextLine();
 
+        //username converted to a JSONObject before being sent to server
+        JSONObject userJSON = (JSONObject) new JSONObject().put("username", sc.nextLine());
+
+        //password converted to a JSONObject before being sent to server
+        JSONObject passwordJSON = (JSONObject) new JSONObject().put("password", sc.nextLine());
+
         //send username to server
-        writer.println(username);
+        writer.println(userJSON);
 
         //send password to server
-        writer.println(password);
+        writer.println(passwordJSON);
 
         //if the server verifies that the password is correct
-        if(clientHandler.verifyPassword(username, password)) {
+        if(ch.verifyPassword(userJSON, password) == true) {
             //TOTP key client receives from server
-            receivedTOTP = userManager.generateTOTPSecret();
+            receivedTOTP = um.generateTOTPSecret();
             
             //user instructed to type in totp
             System.out.println("Type in your Time-Based One Time Password: ");
@@ -84,10 +90,16 @@ public class clientApplication {
             //scanner so user can type totp
             totp = sc.nextLine();
 
+            //password converted to a JSONObject before being sent to server
+            JSONObject totpJSON = (JSONObject) new JSONObject().put("totp", sc.nextLine());
+
+            //send user-typed totp to the server
+            writer.println(totpJSON);
+
             //if server verifies the TOTP
-            if (clientHandler.verifyTOTP(username, totp)) {
+            if (ch.verifyTOTP(userJSON, totp)) {
                 //get the list of games
-                List<JSONObject> gameList = videoGameManager.getAllGames();
+                List<JSONObject> gameList = vgm.getAllGames();
 
                 //print list of games
                 System.out.println("Here is the list of games: \n" + gameList);

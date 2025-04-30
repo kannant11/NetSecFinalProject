@@ -91,7 +91,7 @@ public class clientHandler implements Runnable{
         }
     }
 
-    private boolean verifyPassword(JSONObject user, String inputPassword) throws IOException{
+    public boolean verifyPassword(JSONObject user, String inputPassword) throws IOException{
         try {
             byte[] salt = Base64.getDecoder().decode(user.getString("salt"));
             byte[] hashedInput = SCrypt.generate(inputPassword.getBytes(StandardCharsets.UTF_8), salt, 20000, 8, 1, 32);
@@ -102,7 +102,7 @@ public class clientHandler implements Runnable{
         }
     }
 
-    private boolean verifyTOTP(JSONObject user, String totpCode){
+    public boolean verifyTOTP(JSONObject user, String totpCode){
         try{
             String expectedCode = clientApplication.totp;
             return expectedCode.equals(totpCode);
