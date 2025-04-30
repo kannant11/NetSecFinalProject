@@ -7,7 +7,8 @@ import java.nio.charset.StandardCharsets;
 import merrimackutil.json.types.JSONObject;
 
 import java.util.Base64;
-import java.util.List;
+
+import Client.clientApplication;
 
 import org.bouncycastle.crypto.generators.SCrypt;
 
@@ -103,18 +104,12 @@ public class clientHandler implements Runnable{
 
     private boolean verifyTOTP(JSONObject user, String totpCode){
         try{
-            String secret = user.getString("totpSecret");
-            String expectedCode = TOTP.getOTP(secret);
+            String expectedCode = clientApplication.totp;
             return expectedCode.equals(totpCode);
         } catch (Exception e){
             return false;
         }
     }
-
-    public String generateTOTPSecret(){
-        return " ";
-    }
-
 }
     
 
