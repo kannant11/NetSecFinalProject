@@ -3,6 +3,8 @@ package Client;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.UnknownHostException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -32,7 +34,7 @@ public class clientApplication {
 
     static clientHandler ch; //instance of clientHandler
     static userManager um; //instance of class userManager
-    static videoGameManager vgm; //instance of class videoGameManager
+    static videoGameManager vgm; //instance of class videoGameManager 
 
     //main class
     public static void main(String[] args) throws InputMismatchException, NoSuchElementException, IllegalStateException, IOException{
@@ -42,6 +44,14 @@ public class clientApplication {
         //start connection to server
         try {
             factory = (SSLSocketFactory) SSLSocketFactory.getDefault(); //socket factory created
+
+            System.out.println("What service do you want to go to (type in the key [localhost, etc.])? \n"); //user asked to type in the server they want to go to
+            String serverName = sc.nextLine(); //name of server typed by user
+
+            String hostsFileString = new String(Files.readAllBytes(Paths.get("hosts.json"))); //contents from hosts.json stored in a string
+            JSONObject serversList = new JSONObject(hostsFileString);
+            JSONObject serverInfo = (JSONObject) serverList.get(serverName); //list of servers loaded
+
             socket = (SSLSocket) factory.createSocket(); //create socket from its factory
             socket.startHandshake(); //start the handshake process using the socket
 
