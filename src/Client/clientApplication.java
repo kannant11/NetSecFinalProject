@@ -3,8 +3,6 @@ package Client;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.UnknownHostException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -32,6 +30,7 @@ public class clientApplication {
     public static Scanner receiver; //receiver for user to receive information from server
     public static PrintWriter writer; //writer for user to send information to server
 
+    static JSONObject jo; //instance of JSONObject
     static clientHandler ch; //instance of clientHandler
     static userManager um; //instance of class userManager
     static videoGameManager vgm; //instance of class videoGameManager 
@@ -46,13 +45,14 @@ public class clientApplication {
             factory = (SSLSocketFactory) SSLSocketFactory.getDefault(); //socket factory created
 
             System.out.println("What service do you want to go to (type in the key [localhost, etc.])? \n"); //user asked to type in the server they want to go to
-            String serverName = sc.nextLine(); //name of server typed by user
+            String serverName = sc.nextLine(); //name of server typed by user [which is server key]
 
-            String hostsFileString = new String(Files.readAllBytes(Paths.get("hosts.json"))); //contents from hosts.json stored in a string
-            JSONObject serversList = new JSONObject(hostsFileString);
-            JSONObject serverInfo = (JSONObject) serverList.get(serverName); //list of servers loaded
+            JSONObject serversListJSON = jo.getObject(serverName); //JSON file hosts.json
+            
+            String host = serversListJSON.getString("host"); //get the name of the host
+            int port = serversListJSON.getInt("port number"); //get the port number
 
-            socket = (SSLSocket) factory.createSocket(); //create socket from its factory
+            socket = (SSLSocket) factory.createSocket(host, port); //create socket from its factory
             socket.startHandshake(); //start the handshake process using the socket
 
             receiver = new Scanner(socket.getInputStream()); //receiver set up
