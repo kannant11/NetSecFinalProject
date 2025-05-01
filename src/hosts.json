@@ -1,8 +1,6 @@
 {
-    "local_server": [
-        {
-            "host": "localhost",
-            "port number": "12321"
-        }
-    ]
+    "entries": {
+        "host": "localhost",
+        "port number": "12321"
+    }
 }

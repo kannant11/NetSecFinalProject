@@ -3,6 +3,8 @@ package Client;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.UnknownHostException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -24,7 +26,7 @@ public class clientApplication {
     public static String totp; //time-based one-time password entered by user
     public static byte[] games; //list of video games
 
-    public static Scanner sc; //scanner so user can type input
+    public static Scanner sc = new Scanner(System.in); //scanner so user can type input
     public static SSLSocketFactory factory; //socket factory
     public static SSLSocket socket; //socket for establishing connection through
     public static Scanner receiver; //receiver for user to receive information from server
@@ -44,13 +46,14 @@ public class clientApplication {
         try {
             factory = (SSLSocketFactory) SSLSocketFactory.getDefault(); //socket factory created
 
-            System.out.println("What service do you want to go to (type in the key [localhost, etc.])? \n"); //user asked to type in the server they want to go to
-            String serverName = sc.nextLine(); //name of server typed by user [which is server key]
-
-            JSONObject serversListJSON = jo.getObject(serverName); //JSON file hosts.json
-            
+            String serversList = new String(Files.readAllBytes(Paths.get("hosts.json"))); //read hosts.json
+            JSONObject entries = jo.getObject("entries"); //get every entry in the json file
+            JSONObject serversListJSON = entries.getObject(serversList); //list of servers gotten from the entry
             String host = serversListJSON.getString("host"); //get the name of the host
-            int port = serversListJSON.getInt("port number"); //get the port number
+            int port = Integer.parseInt(serversListJSON.getString("port number")); //get the port number
+
+            System.out.println("What service do you want to go to (type in the key [localhost, etc.])?"); //user asked to type in the server they want to go to
+            host = sc.nextLine(); //name of server typed by user [which is server key]
 
             socket = (SSLSocket) factory.createSocket(host, port); //create socket from its factory
             socket.startHandshake(); //start the handshake process using the socket
