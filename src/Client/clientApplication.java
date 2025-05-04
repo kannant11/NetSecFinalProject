@@ -32,7 +32,7 @@ public class clientApplication {
     public static Scanner receiver; //receiver for user to receive information from server
     public static PrintWriter writer; //writer for user to send information to server
 
-    static JSONObject jo; //instance of JSONObject
+    static JSONObject jo = new JSONObject(); //instance of JSONObject
     static clientHandler ch; //instance of clientHandler
     static userManager um; //instance of class userManager
     static videoGameManager vgm; //instance of class videoGameManager 
