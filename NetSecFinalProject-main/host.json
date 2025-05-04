@@ -1,0 +1,6 @@
+{
+    "local_server": {  
+      "host": "localhost",
+      "port_number": 12321
+    }
+  }

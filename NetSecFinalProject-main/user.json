@@ -1,0 +1,13 @@
+{
+   "user" : [
+      {
+         "password" : "Pc9B2DvF7/uLJ/Br9xPRDy8HZnS1uDexF+WOnKTS4jA=",
+         "totpSecret" : "xh25qufvajoifsztneb3wrxwgaa53ffm",
+         "salt" : "vmiyavuYruAWPz0er4k6Hw==",
+         "hmacKey" : "byrQHp5lYhHOhlfwuViKJviqazfqXaL4GAl0lGRedEs=",
+         "username" : "alice",
+         "subscription status" : "subscribed"
+      }
+   ]
+}
+
