@@ -13,6 +13,9 @@ import merrimackutil.json.types.JSONObject;
 import merrimackutil.json.types.JSONArray;
 import Common.Security;
 import Common.Authentication;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
 
 public class clientApplication {
     private static final Scanner sc = new Scanner(System.in);
