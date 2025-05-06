@@ -95,7 +95,7 @@ public class clientApplication {
                 System.out.println(" - " + ((JSONObject) game).getString("title")));
 
             List<JSONObject> selectedGames = new ArrayList<>();
-            Scanner input = new Scanner(System.in);
+            Scanner input = sc;
             
             while (selectedGames.size() < maxGames) {
                 System.out.print("\nEnter genre to search (or 'done'): ");
