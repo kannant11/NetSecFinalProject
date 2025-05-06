@@ -22,6 +22,45 @@ public class clientApplication {
 
     public static void main(String[] args) {
         try {
+                        String cleanJSON = "{\"local_server\":{\"host\":\"localhost\",\"port_number\":12321}}";
+            Files.write(Paths.get("host.json"), cleanJSON.getBytes(StandardCharsets.UTF_8));
+            System.out.println("Regenerated host.json with clean content");
+
+            File hostFile = new File("host.json");
+
+            System.out.println("Reading host.json from: " + hostFile.getAbsolutePath());
+            String content = new String(Files.readAllBytes(Paths.get("host.json")));
+            System.out.println("Raw file content:\n" + content);
+
+            JSONObject test = JsonIO.readObject("{\"local_server\":{\"host\":\"localhost\",\"port_number\":12321}}");
+            System.out.println("Hardcoded test result: " + test);
+        
+            if (!hostFile.exists()) {
+                throw new FileNotFoundException("host.json not found at: " + hostFile.getAbsolutePath());
+            }
+            if (hostFile.length() == 0) {
+                throw new IOException("host.json is empty");
+            }
+        
+            JSONObject rootConfig = JsonIO.readObject(hostFile);
+            if (rootConfig == null) {
+                throw new RuntimeException("Failed to parse host.json: root is null.");
+            }
+            if (!rootConfig.containsKey("local_server")) {
+                throw new RuntimeException("Missing 'local_server' section");
+            }
+            
+            JSONObject localServer = rootConfig.getObject("local_server");
+        
+            if (!localServer.containsKey("host")) {
+                throw new RuntimeException("Missing 'host' field");
+            }
+            if (!localServer.containsKey("port_number")) {
+                throw new RuntimeException("Missing 'port_number' field");
+            }
+            if (!(localServer.get("port_number") instanceof Number)) {
+                throw new RuntimeException("port_number must be a number");
+            }
             JSONObject hostConfig = JsonIO.readObject(new File("host.json"))
             .getObject("local_server");
             String host = hostConfig.getString("host");
