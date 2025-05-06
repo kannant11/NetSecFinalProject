@@ -1,8 +1,6 @@
 package Common;
 
 import merrimackutil.json.types.JSONObject;
-import merrimackutil.json.types.JSONArray;
-import java.util.List;
 
 public class Protocol {
 
