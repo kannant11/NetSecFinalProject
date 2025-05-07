@@ -54,11 +54,10 @@ public class Security {
         return nonce;
     }
 
-    public static byte[] computeHmac(String algorithm, byte[] data, SecretKey key) 
-    throws Exception {
-    Mac hmac = Mac.getInstance(algorithm);
-    hmac.init(key);
-    return hmac.doFinal(data);
+    public static byte[] computeHmac(String algorithm, byte[] data, SecretKey key) throws Exception {
+        Mac hmac = Mac.getInstance(algorithm);
+        hmac.init(key);
+        return hmac.doFinal(data);
     }
 
     public static byte[] hashPassword(String password, byte[] salt) throws Exception {
@@ -72,8 +71,8 @@ public class Security {
     }
 
     public static byte[] decrypt(SecretKey key, byte[] ciphertext, byte[] iv) throws Exception {
-    Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
-    cipher.init(Cipher.DECRYPT_MODE, key, new GCMParameterSpec(128, iv));
-    return cipher.doFinal(ciphertext);
+        Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+        cipher.init(Cipher.DECRYPT_MODE, key, new GCMParameterSpec(128, iv));
+        return cipher.doFinal(ciphertext);
     }
 }

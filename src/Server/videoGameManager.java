@@ -34,7 +34,7 @@ public class videoGameManager {
     }
 
     public List<JSONObject> getGamesByGenre(String genre) {
-    return games.stream()
+        return games.stream()
         .filter(game -> game.getString("genre").equalsIgnoreCase(genre))
         .collect(Collectors.toList());
 }

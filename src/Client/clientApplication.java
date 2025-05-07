@@ -25,7 +25,7 @@ public class clientApplication {
 
     public static void main(String[] args) {
         try {
-                        String cleanJSON = "{\"local_server\":{\"host\":\"localhost\",\"port_number\":12321}}";
+            String cleanJSON = "{\"local_server\":{\"host\":\"localhost\",\"port_number\":12321}}";
             Files.write(Paths.get("host.json"), cleanJSON.getBytes(StandardCharsets.UTF_8));
             System.out.println("Regenerated host.json with clean content");
 
